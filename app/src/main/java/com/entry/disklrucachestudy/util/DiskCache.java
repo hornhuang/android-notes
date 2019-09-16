@@ -5,6 +5,8 @@ import android.content.pm.PackageInfo;
 
 import androidx.annotation.NonNull;
 
+import com.jakewharton.disklrucache.DiskLruCache;
+
 import java.io.File;
 
 /**
@@ -21,4 +23,7 @@ public interface DiskCache {
     // 获得应用程序版本号
     @NonNull
     int getAppVersion(@NonNull Context context);
+
+    @NonNull
+    DiskLruCache open(@NonNull Context context, @NonNull String uniqueName);
 }

@@ -7,7 +7,10 @@ import android.os.Environment;
 
 import androidx.annotation.NonNull;
 
+import com.jakewharton.disklrucache.DiskLruCache;
+
 import java.io.File;
+import java.io.IOException;
 
 public class DiskLruCacheManager implements DiskCache{
 
@@ -48,6 +51,22 @@ public class DiskLruCacheManager implements DiskCache{
             e.printStackTrace();
         }
         return 1;
+    }
+
+    @NonNull
+    @Override
+    public DiskLruCache open(@NonNull Context context, @NonNull String uniqueName) {
+        DiskLruCache mDiskLruCache = null;
+        try {
+            File cacheDir = getDiskCacheDir(context, uniqueName);
+            if (!cacheDir.exists()) {
+                cacheDir.mkdirs();
+            }
+            mDiskLruCache = DiskLruCache.open(cacheDir, getAppVersion(context), 1, 10 * 1024 * 1024);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return mDiskLruCache;
     }
 
 }
