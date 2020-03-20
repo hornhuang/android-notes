@@ -1,2 +1,2 @@
-*.md linguist-language=markdown
-*.java linguist-language=markdown
+*.md linguist-language=md
+*.java linguist-language=md
