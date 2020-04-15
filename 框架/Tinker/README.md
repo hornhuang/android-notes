@@ -253,8 +253,124 @@
 
 - 创建临时解压目录、初始化类加载器
 
-- 
+- ![](https://user-gold-cdn.xitu.io/2020/4/15/1717bc5a12a0836b?w=920&h=548&f=png&s=312960)
 
 
 
-##### 4.5.7 热修复
+#### 4.6 热修复前的准备
+
+
+
+##### 4.6.1 获得系统类加载器
+
+- ![](https://user-gold-cdn.xitu.io/2020/4/15/1717bc8264cf8f0b?w=896&h=205&f=png&s=79069)
+
+
+
+##### 4.6.2 编写数组合并工具类
+
+- 类中只有一个数组合并方法
+
+![](https://user-gold-cdn.xitu.io/2020/4/15/1717bca9bdae2b1c?w=1034&h=670&f=png&s=495127)
+
+
+
+#### 4.7 反射工具类 ReflectUtils
+
+
+
+##### 4.7.1 获取对象的 getFiled 方法
+
+- ![](https://user-gold-cdn.xitu.io/2020/4/15/1717bd5c11a40c5b?w=894&h=437&f=png&s=192761)
+
+
+
+##### 4.7.2 getPathList 方法
+
+- 获得 BaseDexClassLoader 中的 pathList 对象
+
+- ![](https://user-gold-cdn.xitu.io/2020/4/15/1717bda3a9ebf6b9?w=915&h=272&f=png&s=173568)
+
+
+
+##### 4.7.3 setField 方法
+
+- 拿到属性，进行设置
+
+- ![image-20200415112333542](C:\Users\30797\AppData\Roaming\Typora\typora-user-images\image-20200415112333542.png)
+
+
+
+##### 4.7.4 getDexElements 方法
+
+- 获得 dexElements[]
+
+- ![](https://user-gold-cdn.xitu.io/2020/4/15/1717bdee22dff966?w=983&h=301&f=png&s=175512)
+
+
+
+#### 4.8 进行修复
+
+
+
+##### 4.8.1 获得 ‘ 自己 ’ 的 dexElements 数组
+
+- 通过自己 new 的 DexClassLoader 获得带修复的 dexElements 
+
+- dexElements[] 在 pathList 对象里，所以要先获得它
+
+- ![](https://user-gold-cdn.xitu.io/2020/4/15/1717be852489a010?w=1083&h=392&f=png&s=213340)
+
+
+
+##### 4.8.2 获取 ‘ 系统 ’ 的 dexElements 对象
+
+- 通过 context.getClassLoader 获得的系统 PathClassLoder 获得 dexElements
+
+- ![](https://user-gold-cdn.xitu.io/2020/4/15/1717bebbbbaf4704?w=962&h=516&f=png&s=262068)
+
+
+
+##### 4.8.3 调用合并方法进行合并
+
+- ![](https://user-gold-cdn.xitu.io/2020/4/15/1717bf1c4e00f10d?w=981&h=425&f=png&s=262439)
+
+
+
+##### 4.8.4 获得系统 pathList 重新赋值
+
+- ![](https://user-gold-cdn.xitu.io/2020/4/15/1717bf3a7d6639ba?w=1037&h=523&f=png&s=364004)
+
+
+
+#### 4.9 测试
+
+
+
+##### 4.9.1  载入修复包进行修复
+
+- ![](https://user-gold-cdn.xitu.io/2020/4/15/1717c023facf76b6?w=654&h=387&f=png&s=134851)
+
+
+
+##### 4.9.2 载入修复包进行修复
+
+- 由于每次都在一起动时就加载，所以后面都是用正确的
+
+- ![](https://user-gold-cdn.xitu.io/2020/4/15/1717c046131f1ce6?w=672&h=225&f=png&s=108499)
+
+
+
+##### 4.9.3 载入测试成功
+
+- 打包测试成功
+
+- ![](https://user-gold-cdn.xitu.io/2020/4/15/1717c0613bd9ba2a?w=427&h=666&f=png&s=159694)
+
+
+
+## 五、so 和 资源文件修复
+
+
+
+#### 5.1 
